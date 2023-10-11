@@ -1,0 +1,170 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #222222;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#8995b2", "font": {"color": "white"}, "id": "piliiiiiiiiiiii", "label": "piliiiiiiiiiiii", "shape": "dot"}, {"color": "#8995b2", "font": {"color": "white"}, "id": "bea.0401", "label": "bea.0401", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "pem_014", "label": "pem_014", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "lunarques", "label": "lunarques", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "almu_soto", "label": "almu_soto", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "laaaurv_", "label": "laaaurv_", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "rohipster98", "label": "rohipster98", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "ismarandarroyo", "label": "ismarandarroyo", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "tamarallmusic", "label": "tamarallmusic", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "paulitafanclub", "label": "paulitafanclub", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "ana_jial_26", "label": "ana_jial_26", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "isabel_peinadoo248", "label": "isabel_peinadoo248", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "mamadouteatro", "label": "mamadouteatro", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "pagudoo_", "label": "pagudoo_", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "luisaballesteros_", "label": "luisaballesteros_", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "luciamartintena", "label": "luciamartintena", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "linaa_ruuiz", "label": "linaa_ruuiz", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "777l3n", "label": "777l3n", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "mariquilla99", "label": "mariquilla99", "shape": "dot"}, {"color": "#769f87", "font": {"color": "white"}, "id": "lauraad1", "label": "lauraad1", "shape": "dot"}, {"color": "#769f87", "font": {"color": "white"}, "id": "julia243perez", "label": "julia243perez", "shape": "dot"}, {"color": "#769f87", "font": {"color": "white"}, "id": "cristinac_14", "label": "cristinac_14", "shape": "dot"}, {"color": "#769f87", "font": {"color": "white"}, "id": "inmaexpo", "label": "inmaexpo", "shape": "dot"}, {"color": "#769f87", "font": {"color": "white"}, "id": "ursulacolino", "label": "ursulacolino", "shape": "dot"}, {"color": "#769f87", "font": {"color": "white"}, "id": "crissg811", "label": "crissg811", "shape": "dot"}, {"color": "#769f87", "font": {"color": "white"}, "id": "raquelcamacho97", "label": "raquelcamacho97", "shape": "dot"}, {"color": "#769f87", "font": {"color": "white"}, "id": "kendynbeats", "label": "kendynbeats", "shape": "dot"}, {"color": "#769f87", "font": {"color": "white"}, "id": "reyesturner_s", "label": "reyesturner_s", "shape": "dot"}, {"color": "#80b298", "font": {"color": "white"}, "id": "_rsgphto", "label": "_rsgphto", "shape": "dot"}, {"color": "#80b298", "font": {"color": "white"}, "id": "ruizsegg", "label": "ruizsegg", "shape": "dot"}, {"color": "#769f87", "font": {"color": "white"}, "id": "mariagautier_", "label": "mariagautier_", "shape": "dot"}, {"color": "#769f87", "font": {"color": "white"}, "id": "jesusmanuel178", "label": "jesusmanuel178", "shape": "dot"}, {"color": "#769f87", "font": {"color": "white"}, "id": "javimorerock", "label": "javimorerock", "shape": "dot"}, {"color": "#769f87", "font": {"color": "white"}, "id": "javier_gg_wp", "label": "javier_gg_wp", "shape": "dot"}, {"color": "#769f87", "font": {"color": "white"}, "id": "moonsoulgc", "label": "moonsoulgc", "shape": "dot"}, {"color": "#769f87", "font": {"color": "white"}, "id": "miguelreyesmr", "label": "miguelreyesmr", "shape": "dot"}, {"color": "#769f87", "font": {"color": "white"}, "id": "underpressure3", "label": "underpressure3", "shape": "dot"}, {"color": "#769f87", "font": {"color": "white"}, "id": "monicaunknown", "label": "monicaunknown", "shape": "dot"}, {"color": "#8995b2", "font": {"color": "white"}, "id": "rode.lavega", "label": "rode.lavega", "shape": "dot"}, {"color": "#8995b2", "font": {"color": "white"}, "id": "elitsko", "label": "elitsko", "shape": "dot"}, {"color": "#8995b2", "font": {"color": "white"}, "id": "noelia_alcaide5", "label": "noelia_alcaide5", "shape": "dot"}, {"color": "#796b97", "font": {"color": "white"}, "id": "evaa_ywwsn", "label": "evaa_ywwsn", "shape": "dot"}, {"color": "#b1b4c7", "font": {"color": "white"}, "id": "hanyo_unu", "label": "hanyo_unu", "shape": "dot"}, {"color": "#a46886", "font": {"color": "white"}, "id": "mariasun_pr", "label": "mariasun_pr", "shape": "dot"}, {"color": "#a46886", "font": {"color": "white"}, "id": "jose_vl5", "label": "jose_vl5", "shape": "dot"}, {"color": "#a46886", "font": {"color": "white"}, "id": "juanluismm521", "label": "juanluismm521", "shape": "dot"}, {"color": "#a46886", "font": {"color": "white"}, "id": "jorge.trivy", "label": "jorge.trivy", "shape": "dot"}, {"color": "#a46886", "font": {"color": "white"}, "id": "josecb72", "label": "josecb72", "shape": "dot"}, {"color": "#c0a4a3", "font": {"color": "white"}, "id": "maciejeanne", "label": "maciejeanne", "shape": "dot"}, {"color": "#76b492", "font": {"color": "white"}, "id": "cristiangomez131080", "label": "cristiangomez131080", "shape": "dot"}, {"color": "#76b492", "font": {"color": "white"}, "id": "buda_sketch", "label": "buda_sketch", "shape": "dot"}, {"color": "#76b492", "font": {"color": "white"}, "id": "brenda_oliver11_", "label": "brenda_oliver11_", "shape": "dot"}, {"color": "#8995b2", "font": {"color": "white"}, "id": "pia.agnieszka", "label": "pia.agnieszka", "shape": "dot"}, {"color": "#8995b2", "font": {"color": "white"}, "id": "jack.sk", "label": "jack.sk", "shape": "dot"}, {"color": "#8995b2", "font": {"color": "white"}, "id": "juanbv15", "label": "juanbv15", "shape": "dot"}, {"color": "#987486", "font": {"color": "white"}, "id": "iglu_pingu", "label": "iglu_pingu", "shape": "dot"}, {"color": "#987486", "font": {"color": "white"}, "id": "yiyi__1807__", "label": "yiyi__1807__", "shape": "dot"}, {"color": "#aa71b9", "font": {"color": "white"}, "id": "vicky_nameless", "label": "vicky_nameless", "shape": "dot"}, {"color": "#aa71b9", "font": {"color": "white"}, "id": "vrm.art_", "label": "vrm.art_", "shape": "dot"}, {"color": "#8995b2", "font": {"color": "white"}, "id": "andreasbrandberg", "label": "andreasbrandberg", "shape": "dot"}, {"color": "#8995b2", "font": {"color": "white"}, "id": "ich.mal.wieder", "label": "ich.mal.wieder", "shape": "dot"}, {"color": "#8995b2", "font": {"color": "white"}, "id": "chiara.simeo", "label": "chiara.simeo", "shape": "dot"}, {"color": "#8995b2", "font": {"color": "white"}, "id": "mytould", "label": "mytould", "shape": "dot"}, {"color": "#987486", "font": {"color": "white"}, "id": "juli_9z", "label": "juli_9z", "shape": "dot"}, {"color": "#987486", "font": {"color": "white"}, "id": "caballeromartinezgabriel", "label": "caballeromartinezgabriel", "shape": "dot"}, {"color": "#987486", "font": {"color": "white"}, "id": "alvarocobolara", "label": "alvarocobolara", "shape": "dot"}, {"color": "#76b492", "font": {"color": "white"}, "id": "ramoonquero", "label": "ramoonquero", "shape": "dot"}, {"color": "#a46886", "font": {"color": "white"}, "id": "fotosdelmanu", "label": "fotosdelmanu", "shape": "dot"}, {"color": "#76b492", "font": {"color": "white"}, "id": "saramorenoquero", "label": "saramorenoquero", "shape": "dot"}, {"color": "#76b492", "font": {"color": "white"}, "id": "carmenqueroexposito9", "label": "carmenqueroexposito9", "shape": "dot"}, {"color": "#6c8e8c", "font": {"color": "white"}, "id": "_anabeelmena_", "label": "_anabeelmena_", "shape": "dot"}, {"color": "#8ac4c7", "font": {"color": "white"}, "id": "emoeinteligenciaemocional", "label": "emoeinteligenciaemocional", "shape": "dot"}, {"color": "#a46886", "font": {"color": "white"}, "id": "fabiicremers.bmx", "label": "fabiicremers.bmx", "shape": "dot"}, {"color": "#8995b2", "font": {"color": "white"}, "id": "esngranada", "label": "esngranada", "shape": "dot"}, {"color": "#8995b2", "font": {"color": "white"}, "id": "lupapu_", "label": "lupapu_", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"from": "piliiiiiiiiiiii", "to": "bea.0401"}, {"from": "pem_014", "to": "lunarques"}, {"from": "pem_014", "to": "almu_soto"}, {"from": "pem_014", "to": "laaaurv_"}, {"from": "pem_014", "to": "rohipster98"}, {"from": "pem_014", "to": "ismarandarroyo"}, {"from": "pem_014", "to": "tamarallmusic"}, {"from": "pem_014", "to": "paulitafanclub"}, {"from": "pem_014", "to": "ana_jial_26"}, {"from": "pem_014", "to": "isabel_peinadoo248"}, {"from": "pem_014", "to": "mamadouteatro"}, {"from": "pem_014", "to": "pagudoo_"}, {"from": "pem_014", "to": "luisaballesteros_"}, {"from": "pem_014", "to": "luciamartintena"}, {"from": "pem_014", "to": "linaa_ruuiz"}, {"from": "pem_014", "to": "777l3n"}, {"from": "pem_014", "to": "mariquilla99"}, {"from": "lauraad1", "to": "julia243perez"}, {"from": "lauraad1", "to": "lunarques"}, {"from": "lauraad1", "to": "cristinac_14"}, {"from": "lauraad1", "to": "inmaexpo"}, {"from": "lauraad1", "to": "ursulacolino"}, {"from": "lauraad1", "to": "crissg811"}, {"from": "lauraad1", "to": "raquelcamacho97"}, {"from": "kendynbeats", "to": "julia243perez"}, {"from": "kendynbeats", "to": "reyesturner_s"}, {"from": "_rsgphto", "to": "ruizsegg"}, {"from": "julia243perez", "to": "mariagautier_"}, {"from": "julia243perez", "to": "cristinac_14"}, {"from": "julia243perez", "to": "jesusmanuel178"}, {"from": "julia243perez", "to": "inmaexpo"}, {"from": "julia243perez", "to": "ursulacolino"}, {"from": "julia243perez", "to": "crissg811"}, {"from": "julia243perez", "to": "javimorerock"}, {"from": "mariagautier_", "to": "javier_gg_wp"}, {"from": "mariagautier_", "to": "moonsoulgc"}, {"from": "mariagautier_", "to": "reyesturner_s"}, {"from": "mariagautier_", "to": "miguelreyesmr"}, {"from": "mariagautier_", "to": "jesusmanuel178"}, {"from": "mariagautier_", "to": "underpressure3"}, {"from": "mariagautier_", "to": "inmaexpo"}, {"from": "mariagautier_", "to": "ursulacolino"}, {"from": "mariagautier_", "to": "crissg811"}, {"from": "mariagautier_", "to": "javimorerock"}, {"from": "mariagautier_", "to": "monicaunknown"}, {"from": "rode.lavega", "to": "elitsko"}, {"from": "rode.lavega", "to": "noelia_alcaide5"}, {"from": "lunarques", "to": "almu_soto"}, {"from": "lunarques", "to": "laaaurv_"}, {"from": "lunarques", "to": "rohipster98"}, {"from": "lunarques", "to": "ismarandarroyo"}, {"from": "lunarques", "to": "evaa_ywwsn"}, {"from": "lunarques", "to": "tamarallmusic"}, {"from": "lunarques", "to": "paulitafanclub"}, {"from": "lunarques", "to": "ana_jial_26"}, {"from": "lunarques", "to": "isabel_peinadoo248"}, {"from": "lunarques", "to": "mamadouteatro"}, {"from": "lunarques", "to": "pagudoo_"}, {"from": "lunarques", "to": "luisaballesteros_"}, {"from": "lunarques", "to": "luciamartintena"}, {"from": "lunarques", "to": "linaa_ruuiz"}, {"from": "lunarques", "to": "mariquilla99"}, {"from": "almu_soto", "to": "laaaurv_"}, {"from": "almu_soto", "to": "rohipster98"}, {"from": "almu_soto", "to": "ismarandarroyo"}, {"from": "almu_soto", "to": "evaa_ywwsn"}, {"from": "almu_soto", "to": "tamarallmusic"}, {"from": "almu_soto", "to": "paulitafanclub"}, {"from": "almu_soto", "to": "ana_jial_26"}, {"from": "almu_soto", "to": "isabel_peinadoo248"}, {"from": "almu_soto", "to": "mamadouteatro"}, {"from": "almu_soto", "to": "pagudoo_"}, {"from": "almu_soto", "to": "luisaballesteros_"}, {"from": "almu_soto", "to": "luciamartintena"}, {"from": "almu_soto", "to": "linaa_ruuiz"}, {"from": "almu_soto", "to": "777l3n"}, {"from": "almu_soto", "to": "mariquilla99"}, {"from": "mariasun_pr", "to": "jose_vl5"}, {"from": "mariasun_pr", "to": "javimorerock"}, {"from": "mariasun_pr", "to": "juanluismm521"}, {"from": "mariasun_pr", "to": "jorge.trivy"}, {"from": "mariasun_pr", "to": "josecb72"}, {"from": "laaaurv_", "to": "rohipster98"}, {"from": "laaaurv_", "to": "ismarandarroyo"}, {"from": "laaaurv_", "to": "tamarallmusic"}, {"from": "laaaurv_", "to": "paulitafanclub"}, {"from": "laaaurv_", "to": "ana_jial_26"}, {"from": "laaaurv_", "to": "isabel_peinadoo248"}, {"from": "laaaurv_", "to": "mamadouteatro"}, {"from": "laaaurv_", "to": "pagudoo_"}, {"from": "laaaurv_", "to": "luisaballesteros_"}, {"from": "laaaurv_", "to": "luciamartintena"}, {"from": "laaaurv_", "to": "linaa_ruuiz"}, {"from": "laaaurv_", "to": "jorge.trivy"}, {"from": "laaaurv_", "to": "777l3n"}, {"from": "laaaurv_", "to": "mariquilla99"}, {"from": "rohipster98", "to": "ismarandarroyo"}, {"from": "rohipster98", "to": "tamarallmusic"}, {"from": "rohipster98", "to": "paulitafanclub"}, {"from": "rohipster98", "to": "ana_jial_26"}, {"from": "rohipster98", "to": "isabel_peinadoo248"}, {"from": "rohipster98", "to": "mamadouteatro"}, {"from": "rohipster98", "to": "pagudoo_"}, {"from": "rohipster98", "to": "luisaballesteros_"}, {"from": "rohipster98", "to": "luciamartintena"}, {"from": "rohipster98", "to": "linaa_ruuiz"}, {"from": "rohipster98", "to": "777l3n"}, {"from": "rohipster98", "to": "mariquilla99"}, {"from": "javier_gg_wp", "to": "moonsoulgc"}, {"from": "javier_gg_wp", "to": "reyesturner_s"}, {"from": "javier_gg_wp", "to": "miguelreyesmr"}, {"from": "javier_gg_wp", "to": "jesusmanuel178"}, {"from": "javier_gg_wp", "to": "underpressure3"}, {"from": "javier_gg_wp", "to": "inmaexpo"}, {"from": "javier_gg_wp", "to": "crissg811"}, {"from": "javier_gg_wp", "to": "raquelcamacho97"}, {"from": "javier_gg_wp", "to": "javimorerock"}, {"from": "cristiangomez131080", "to": "buda_sketch"}, {"from": "cristiangomez131080", "to": "brenda_oliver11_"}, {"from": "pia.agnieszka", "to": "jack.sk"}, {"from": "pia.agnieszka", "to": "juanbv15"}, {"from": "iglu_pingu", "to": "yiyi__1807__"}, {"from": "vicky_nameless", "to": "vrm.art_"}, {"from": "andreasbrandberg", "to": "elitsko"}, {"from": "andreasbrandberg", "to": "ich.mal.wieder"}, {"from": "andreasbrandberg", "to": "chiara.simeo"}, {"from": "andreasbrandberg", "to": "mytould"}, {"from": "juli_9z", "to": "yiyi__1807__"}, {"from": "juli_9z", "to": "caballeromartinezgabriel"}, {"from": "juli_9z", "to": "alvarocobolara"}, {"from": "yiyi__1807__", "to": "caballeromartinezgabriel"}, {"from": "ismarandarroyo", "to": "evaa_ywwsn"}, {"from": "ismarandarroyo", "to": "tamarallmusic"}, {"from": "ismarandarroyo", "to": "paulitafanclub"}, {"from": "ismarandarroyo", "to": "ana_jial_26"}, {"from": "ismarandarroyo", "to": "isabel_peinadoo248"}, {"from": "ismarandarroyo", "to": "mamadouteatro"}, {"from": "ismarandarroyo", "to": "pagudoo_"}, {"from": "ismarandarroyo", "to": "luisaballesteros_"}, {"from": "ismarandarroyo", "to": "luciamartintena"}, {"from": "ismarandarroyo", "to": "linaa_ruuiz"}, {"from": "ismarandarroyo", "to": "jorge.trivy"}, {"from": "ismarandarroyo", "to": "777l3n"}, {"from": "ismarandarroyo", "to": "ramoonquero"}, {"from": "ismarandarroyo", "to": "mariquilla99"}, {"from": "evaa_ywwsn", "to": "mamadouteatro"}, {"from": "evaa_ywwsn", "to": "reyesturner_s"}, {"from": "evaa_ywwsn", "to": "pagudoo_"}, {"from": "evaa_ywwsn", "to": "linaa_ruuiz"}, {"from": "tamarallmusic", "to": "paulitafanclub"}, {"from": "tamarallmusic", "to": "ana_jial_26"}, {"from": "tamarallmusic", "to": "isabel_peinadoo248"}, {"from": "tamarallmusic", "to": "mamadouteatro"}, {"from": "tamarallmusic", "to": "pagudoo_"}, {"from": "tamarallmusic", "to": "luisaballesteros_"}, {"from": "tamarallmusic", "to": "jose_vl5"}, {"from": "tamarallmusic", "to": "luciamartintena"}, {"from": "tamarallmusic", "to": "linaa_ruuiz"}, {"from": "tamarallmusic", "to": "777l3n"}, {"from": "tamarallmusic", "to": "mariquilla99"}, {"from": "paulitafanclub", "to": "moonsoulgc"}, {"from": "paulitafanclub", "to": "ana_jial_26"}, {"from": "paulitafanclub", "to": "isabel_peinadoo248"}, {"from": "paulitafanclub", "to": "mamadouteatro"}, {"from": "paulitafanclub", "to": "pagudoo_"}, {"from": "paulitafanclub", "to": "underpressure3"}, {"from": "paulitafanclub", "to": "luisaballesteros_"}, {"from": "paulitafanclub", "to": "jose_vl5"}, {"from": "paulitafanclub", "to": "luciamartintena"}, {"from": "paulitafanclub", "to": "linaa_ruuiz"}, {"from": "paulitafanclub", "to": "jorge.trivy"}, {"from": "paulitafanclub", "to": "777l3n"}, {"from": "paulitafanclub", "to": "mariquilla99"}, {"from": "cristinac_14", "to": "luisaballesteros_"}, {"from": "cristinac_14", "to": "ursulacolino"}, {"from": "cristinac_14", "to": "crissg811"}, {"from": "fotosdelmanu", "to": "jorge.trivy"}, {"from": "saramorenoquero", "to": "ramoonquero"}, {"from": "moonsoulgc", "to": "miguelreyesmr"}, {"from": "moonsoulgc", "to": "jesusmanuel178"}, {"from": "moonsoulgc", "to": "underpressure3"}, {"from": "moonsoulgc", "to": "javimorerock"}, {"from": "ana_jial_26", "to": "isabel_peinadoo248"}, {"from": "ana_jial_26", "to": "mamadouteatro"}, {"from": "ana_jial_26", "to": "pagudoo_"}, {"from": "ana_jial_26", "to": "luisaballesteros_"}, {"from": "ana_jial_26", "to": "luciamartintena"}, {"from": "ana_jial_26", "to": "linaa_ruuiz"}, {"from": "ana_jial_26", "to": "777l3n"}, {"from": "ana_jial_26", "to": "mariquilla99"}, {"from": "carmenqueroexposito9", "to": "cristiangomez131080"}, {"from": "carmenqueroexposito9", "to": "brenda_oliver11_"}, {"from": "carmenqueroexposito9", "to": "ramoonquero"}, {"from": "isabel_peinadoo248", "to": "pagudoo_"}, {"from": "isabel_peinadoo248", "to": "luisaballesteros_"}, {"from": "isabel_peinadoo248", "to": "luciamartintena"}, {"from": "isabel_peinadoo248", "to": "linaa_ruuiz"}, {"from": "isabel_peinadoo248", "to": "mariquilla99"}, {"from": "mamadouteatro", "to": "pagudoo_"}, {"from": "mamadouteatro", "to": "luisaballesteros_"}, {"from": "mamadouteatro", "to": "linaa_ruuiz"}, {"from": "reyesturner_s", "to": "miguelreyesmr"}, {"from": "reyesturner_s", "to": "jesusmanuel178"}, {"from": "reyesturner_s", "to": "underpressure3"}, {"from": "reyesturner_s", "to": "crissg811"}, {"from": "reyesturner_s", "to": "javimorerock"}, {"from": "reyesturner_s", "to": "monicaunknown"}, {"from": "bea.0401", "to": "elitsko"}, {"from": "bea.0401", "to": "noelia_alcaide5"}, {"from": "juanbv15", "to": "elitsko"}, {"from": "juanbv15", "to": "noelia_alcaide5"}, {"from": "juanbv15", "to": "chiara.simeo"}, {"from": "elitsko", "to": "noelia_alcaide5"}, {"from": "elitsko", "to": "ich.mal.wieder"}, {"from": "miguelreyesmr", "to": "kendynbeats"}, {"from": "miguelreyesmr", "to": "jesusmanuel178"}, {"from": "miguelreyesmr", "to": "underpressure3"}, {"from": "miguelreyesmr", "to": "javimorerock"}, {"from": "jesusmanuel178", "to": "cristinac_14"}, {"from": "jesusmanuel178", "to": "underpressure3"}, {"from": "jesusmanuel178", "to": "crissg811"}, {"from": "jesusmanuel178", "to": "javimorerock"}, {"from": "jesusmanuel178", "to": "monicaunknown"}, {"from": "pagudoo_", "to": "luisaballesteros_"}, {"from": "pagudoo_", "to": "luciamartintena"}, {"from": "pagudoo_", "to": "linaa_ruuiz"}, {"from": "pagudoo_", "to": "mariquilla99"}, {"from": "underpressure3", "to": "crissg811"}, {"from": "underpressure3", "to": "javimorerock"}, {"from": "underpressure3", "to": "monicaunknown"}, {"from": "luisaballesteros_", "to": "luciamartintena"}, {"from": "luisaballesteros_", "to": "linaa_ruuiz"}, {"from": "luisaballesteros_", "to": "mariquilla99"}, {"from": "inmaexpo", "to": "ursulacolino"}, {"from": "inmaexpo", "to": "crissg811"}, {"from": "inmaexpo", "to": "raquelcamacho97"}, {"from": "inmaexpo", "to": "javimorerock"}, {"from": "ursulacolino", "to": "monicaunknown"}, {"from": "crissg811", "to": "monicaunknown"}, {"from": "jose_vl5", "to": "juanluismm521"}, {"from": "jose_vl5", "to": "jorge.trivy"}, {"from": "jose_vl5", "to": "josecb72"}, {"from": "javimorerock", "to": "juanluismm521"}, {"from": "javimorerock", "to": "monicaunknown"}, {"from": "ich.mal.wieder", "to": "mytould"}, {"from": "juanluismm521", "to": "jorge.trivy"}, {"from": "juanluismm521", "to": "josecb72"}, {"from": "luciamartintena", "to": "mamadouteatro"}, {"from": "luciamartintena", "to": "linaa_ruuiz"}, {"from": "luciamartintena", "to": "777l3n"}, {"from": "linaa_ruuiz", "to": "mariquilla99"}, {"from": "jorge.trivy", "to": "josecb72"}, {"from": "mariquilla99", "to": "mamadouteatro"}, {"from": "mariquilla99", "to": "luciamartintena"}, {"from": "fabiicremers.bmx", "to": "mariasun_pr"}, {"from": "fabiicremers.bmx", "to": "juanluismm521"}, {"from": "fabiicremers.bmx", "to": "linaa_ruuiz"}, {"from": "esngranada", "to": "pia.agnieszka"}, {"from": "esngranada", "to": "jack.sk"}, {"from": "esngranada", "to": "andreasbrandberg"}, {"from": "esngranada", "to": "juanbv15"}, {"from": "esngranada", "to": "elitsko"}, {"from": "esngranada", "to": "noelia_alcaide5"}, {"from": "esngranada", "to": "ich.mal.wieder"}, {"from": "esngranada", "to": "chiara.simeo"}, {"from": "lupapu_", "to": "pia.agnieszka"}, {"from": "lupapu_", "to": "jack.sk"}, {"from": "lupapu_", "to": "andreasbrandberg"}, {"from": "lupapu_", "to": "juanbv15"}, {"from": "lupapu_", "to": "elitsko"}, {"from": "lupapu_", "to": "noelia_alcaide5"}, {"from": "lupapu_", "to": "ich.mal.wieder"}, {"from": "lupapu_", "to": "chiara.simeo"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
